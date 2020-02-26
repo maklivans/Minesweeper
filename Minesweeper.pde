@@ -52,17 +52,24 @@ public boolean isWon()
 }
 public void displayLosingMessage()
 {
-    fill(255);
-    textSize(30);
-    text("You lose!",150,185);
+    // for (int i=0; i<mines.size(); i++)
+    //     mines.get(i).mousePressed();
+    String losingMessage = "You Lose!";
+    for (int i=5; i<5+losingMessage.length(); i++) {
+        buttons[9][i].myLabel = losingMessage.substring(i-5,i-4);
+    }
+
+    //text("You lose!",150,185);
 }
 public void displayWinningMessage()
 {
-    for (int i=0; i<mines.size(); i++)
-        mines.get(i).mousePressed();
-    fill(255);
-    textSize(30);
-    text("You win!",150,185);
+    //for (int i=0; i<mines.size(); i++)
+    //    mines.get(i).mousePressed();
+    String winningMessage = "You win!";
+    for (int i=5; i<5+winningMessage.length(); i++) {
+        buttons[9][i].myLabel = winningMessage.substring(i-5,i-4);
+    }
+   
 }
 public boolean isValid(int r, int c)
 {
@@ -74,22 +81,10 @@ public int countMines(int row, int col)
 {
     int numMines = 0;
     //your code here
-    if (isValid(row-1,col-1)&&mines.contains(buttons[row-1][col-1]))
-        numMines++;
-    if (isValid(row-1,col)&&mines.contains(buttons[row-1][col]))
-        numMines++;
-    if (isValid(row-1,col+1)&&mines.contains(buttons[row-1][col+1]))
-        numMines++;
-    if (isValid(row,col-1)&&mines.contains(buttons[row][col-1]))
-        numMines++;
-    if (isValid(row,col+1)&&mines.contains(buttons[row-1][col+1]))
-        numMines++;
-    if (isValid(row+1,col-1)&&mines.contains(buttons[row+1][col-1]))
-        numMines++;
-    if (isValid(row+1,col)&&mines.contains(buttons[row-1][col]))
-        numMines++;
-    if (isValid(row+1,col+1)&&mines.contains(buttons[row+1][col+1]))
-        numMines++;
+    for (int r=row-1; r<row+2; r++)
+        for (int c=col-1; c<col+2; c++)
+            if (isValid(r,c)&&mines.contains(buttons[r][c]))
+                numMines++;
 
     return numMines;
 }
@@ -128,14 +123,14 @@ public class MSButton
         else if (countMines(myRow,myCol)>0)
             myLabel = ""+(countMines(myRow,myCol));
         else {
-            buttons[myRow-1][myCol-1].mousePressed();
-            buttons[myRow-1][myCol].mousePressed();
-            buttons[myRow-1][myCol+1].mousePressed();
-            buttons[myRow][myCol-1].mousePressed();
-            buttons[myRow][myCol+1].mousePressed();
-            buttons[myRow+1][myCol-1].mousePressed();
-            buttons[myRow+1][myCol].mousePressed();
-            buttons[myRow+1][myCol+1].mousePressed();
+            for (int r=myRow-1; r<myRow+2; r++)
+                for (int c=myCol-1; c<myCol+2; c++)
+                    if (isValid(r,c)&&!buttons[r][c].clicked)
+                    { 
+                        System.out.println(r + ", " + c);
+                        buttons[r][c].mousePressed();
+                    }
+
         }
             
     }
