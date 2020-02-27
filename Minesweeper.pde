@@ -58,6 +58,7 @@ public void displayLosingMessage()
     for (int i=5; i<5+losingMessage.length(); i++) {
         buttons[9][i].myLabel = losingMessage.substring(i-5,i-4);
     }
+    noLoop();
 
     //text("You lose!",150,185);
 }
@@ -69,6 +70,7 @@ public void displayWinningMessage()
     for (int i=5; i<5+winningMessage.length(); i++) {
         buttons[9][i].myLabel = winningMessage.substring(i-5,i-4);
     }
+    noLoop();
    
 }
 public boolean isValid(int r, int c)
@@ -113,11 +115,11 @@ public class MSButton
     {
         clicked = true;
         //your code here
-        if (mouseButton==RIGHT){
+        if (mouseButton==RIGHT&&myLabel==""){
             flagged = !flagged;
-            if (flagged==false)
-                clicked = false;
-        }
+             if (flagged==false)
+                 clicked = false;
+         }
         else if (mines.contains(this))
             displayLosingMessage();
         else if (countMines(myRow,myCol)>0)
