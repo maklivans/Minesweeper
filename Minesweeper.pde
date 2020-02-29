@@ -58,7 +58,7 @@ public void displayLosingMessage()
     for (int i=5; i<5+losingMessage.length(); i++) {
         buttons[9][i].myLabel = losingMessage.substring(i-5,i-4);
     }
-    noLoop();
+    //noLoop();
 
     //text("You lose!",150,185);
 }
@@ -70,7 +70,7 @@ public void displayWinningMessage()
     for (int i=5; i<5+winningMessage.length(); i++) {
         buttons[9][i].myLabel = winningMessage.substring(i-5,i-4);
     }
-    noLoop();
+    //noLoop();
    
 }
 public boolean isValid(int r, int c)
