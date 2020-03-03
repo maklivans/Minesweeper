@@ -2,7 +2,7 @@ import de.bezier.guido.*;
 private final static int NUM_ROWS=20; int NUM_COLS=20;   //Declare and initialize constants NUM_ROWS and NUM_COLS = 20
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
-
+//private String losingMessage; 
 
 
 void setup ()
@@ -13,6 +13,9 @@ void setup ()
     // make the manager
     Interactive.make( this );
     
+    //initialize losingMessage
+    //losingMessage = "You Lose!";
+
     //your code to initialize buttons goes here
     
     buttons = new MSButton[NUM_ROWS][NUM_COLS];
@@ -44,18 +47,25 @@ public void draw ()
 }
 public boolean isWon()
 {
-    //your code here
-    for (int i=0; i<mines.size(); i++)
-        if (mines.get(i).flagged==false)
-            return false;
+    //return true;
+    your code here
+    loop checks if all the buttons that are not mines are clicked, then you win
+    for (int r=0; r<buttons.length; r++) {
+        for (int c=0; c<buttons[r].length; c++) {
+            if (mines.contains(buttons[r][c]))
+                r++;
+                c++;
+            if (!buttons[r][c].clicked) return false;
+        }
+    }
     return true;
 }
 public void displayLosingMessage()
 {
-    // for (int i=0; i<mines.size(); i++)
-    //     mines.get(i).mousePressed();
-    String losingMessage = "You Lose!";
+
+    String losingMessage = "You lose!";
     for (int i=5; i<5+losingMessage.length(); i++) {
+        fill(255);
         buttons[9][i].myLabel = losingMessage.substring(i-5,i-4);
     }
     //noLoop();
@@ -65,7 +75,7 @@ public void displayLosingMessage()
 public void displayWinningMessage()
 {
     //for (int i=0; i<mines.size(); i++)
-    //    mines.get(i).mousePressed();
+    //    mines.get(i).mousePressed()
     String winningMessage = "You win!";
     for (int i=5; i<5+winningMessage.length(); i++) {
         buttons[9][i].myLabel = winningMessage.substring(i-5,i-4);
@@ -138,6 +148,11 @@ public class MSButton
     }
     public void draw () 
     {    
+
+        //for (int i=0; i<losingMessage.length(); i++) {
+          //  if (buttons[9][i].myLabel==losingMessage.substring(i,i+1)) fill(255);
+        //}
+
         if (flagged)
             fill(0);
         else if( clicked && mines.contains(this) ) 
@@ -149,10 +164,17 @@ public class MSButton
 
         rect(x, y, width, height);
         fill(0);
+        if (isWon()) fill(0,255,0);
+        //String losingMessage = "You lose!";
+        // boolean isLost = false;
+        // for (char character : losingMessage) {
+        //     if (character==myLabel.charAt(0)) 
+        // }
         text(myLabel,x+width/2,y+height/2);
     }
     public void setLabel(String newLabel)
     {
+
         myLabel = newLabel;
     }
     public void setLabel(int newLabel)
