@@ -3,6 +3,7 @@ private final static int NUM_ROWS=20; int NUM_COLS=20;   //Declare and initializ
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines; //ArrayList of just the minesweeper buttons that are mined
 //private String losingMessage; 
+boolean isLost = false;
 
 
 void setup ()
@@ -48,8 +49,8 @@ public void draw ()
 public boolean isWon()
 {
     //return true;
-    your code here
-    loop checks if all the buttons that are not mines are clicked, then you win
+    //your code here
+    //loop checks if all the buttons that are not mines are clicked, then you win
     for (int r=0; r<buttons.length; r++) {
         for (int c=0; c<buttons[r].length; c++) {
             if (mines.contains(buttons[r][c]))
@@ -130,10 +131,13 @@ public class MSButton
              if (flagged==false)
                  clicked = false;
          }
-        else if (mines.contains(this))
+        else if (mines.contains(this)) {
+            isLost = true;
             displayLosingMessage();
+        }
         else if (countMines(myRow,myCol)>0)
             myLabel = ""+(countMines(myRow,myCol));
+
         else {
             for (int r=myRow-1; r<myRow+2; r++)
                 for (int c=myCol-1; c<myCol+2; c++)
@@ -143,6 +147,18 @@ public class MSButton
                         buttons[r][c].mousePressed();
                     }
 
+        }
+        if (myLabel!="") {
+            int numFlagged = 0;
+            for (int r=myRow-1; r<myRow+2; r++)
+                for (int c=myCol-1; c<myCol+2; c++)
+                    if (isValid(r,c) && buttons[r][c].flagged) numFlagged++;
+            System.out.println(numFlagged);
+            if (numFlagged==Integer.parseInt(myLabel)) {
+                for (int r=myRow-1; r<myRow+2; r++)
+                    for (int c=myCol-1; c<myCol+2; c++)
+                        if (isValid(r,c) && !buttons[r][c].flagged) buttons[r][c].mousePressed();
+            }
         }
             
     }
@@ -165,6 +181,7 @@ public class MSButton
         rect(x, y, width, height);
         fill(0);
         if (isWon()) fill(0,255,0);
+        if (isLost) fill(0,0,255);
         //String losingMessage = "You lose!";
         // boolean isLost = false;
         // for (char character : losingMessage) {
