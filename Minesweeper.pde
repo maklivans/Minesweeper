@@ -138,7 +138,7 @@ public class MSButton
         else if (countMines(myRow,myCol)>0)
             myLabel = ""+(countMines(myRow,myCol));
 
-        else {
+        else /*if (myLabel==""&&buttons[myRow][myCol].clicked)*/ {
             for (int r=myRow-1; r<myRow+2; r++)
                 for (int c=myCol-1; c<myCol+2; c++)
                     if (isValid(r,c)&&!buttons[r][c].clicked)
@@ -148,18 +148,18 @@ public class MSButton
                     }
 
         }
-        if (myLabel!="") {
-            int numFlagged = 0;
-            for (int r=myRow-1; r<myRow+2; r++)
-                for (int c=myCol-1; c<myCol+2; c++)
-                    if (isValid(r,c) && buttons[r][c].flagged) numFlagged++;
-            System.out.println(numFlagged);
-            if (numFlagged==Integer.parseInt(myLabel)) {
-                for (int r=myRow-1; r<myRow+2; r++)
-                    for (int c=myCol-1; c<myCol+2; c++)
-                        if (isValid(r,c) && !buttons[r][c].flagged) buttons[r][c].mousePressed();
-            }
-        }
+        // if (myLabel!="") {
+        //     int numFlagged = 0;
+        //     for (int r=myRow-1; r<myRow+2; r++)
+        //         for (int c=myCol-1; c<myCol+2; c++)
+        //             if (isValid(r,c) && buttons[r][c].flagged) numFlagged++;
+        //     //System.out.println(numFlagged);
+        //     if (numFlagged==Integer.parseInt(myLabel)) {
+        //         for (int r=myRow-1; r<myRow+2; r++)
+        //             for (int c=myCol-1; c<myCol+2; c++)
+        //                 if (isValid(r,c) && !buttons[r][c].flagged) buttons[r][c].mousePressed();
+        //     }
+        // }
             
     }
     public void draw () 
