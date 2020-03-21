@@ -176,7 +176,7 @@ public class MSButton
         else if(clicked)
             fill(200);
         else 
-            fill(100);
+            fill(250,50,227);
 
         rect(x, y, width, height);
         fill(0);
